@@ -18,7 +18,7 @@ public class DBService {
     @Autowired
     private ContaRepository contaRepository;
 
-    public void instatiateTestDataBase() throws ParseException {
+    public void instatiateTestDataBase(){
 
         Cliente cli1 = new Cliente(null, "Guilherme");
         Cliente cli2 = new Cliente(null, "Marcela");
@@ -31,12 +31,5 @@ public class DBService {
 
         clienteRepository.saveAll(List.of(cli1, cli2));
         contaRepository.saveAll(List.of(cont1, cont2));
-
-
-
-
-
-
-
     }
 }

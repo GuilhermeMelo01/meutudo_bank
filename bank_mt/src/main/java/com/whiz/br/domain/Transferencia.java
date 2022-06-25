@@ -1,31 +1,35 @@
 package com.whiz.br.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
-public class Cliente implements Serializable {
+public class Transferencia implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+
+//    @JsonFormat(pattern = "dd/MM/yyyy")
+    private Date date;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "cliente")
-    private List<Conta> conta = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "conta_id")
+    private Conta conta;
 
-    public Cliente() {
+    public Transferencia() {
     }
 
-    public Cliente(Long id, String name) {
+    public Transferencia(Long id, Date date, Conta conta) {
         this.id = id;
-        this.name = name;
+        this.date = date;
+        this.conta = conta;
     }
 
     public Long getId() {
@@ -36,19 +40,19 @@ public class Cliente implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Date getDate() {
+        return date;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    public List<Conta> getConta() {
+    public Conta getConta() {
         return conta;
     }
 
-    public void setConta(List<Conta> conta) {
+    public void setConta(Conta conta) {
         this.conta = conta;
     }
 
@@ -56,8 +60,8 @@ public class Cliente implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Cliente cliente = (Cliente) o;
-        return Objects.equals(id, cliente.id);
+        Transferencia that = (Transferencia) o;
+        return Objects.equals(id, that.id);
     }
 
     @Override

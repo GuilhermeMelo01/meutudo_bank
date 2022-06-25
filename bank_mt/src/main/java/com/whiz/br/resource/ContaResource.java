@@ -28,11 +28,4 @@ public class ContaResource {
         Double balance = contaService.findBalance(id);
         return ResponseEntity.ok().body(balance);
     }
-
-    @RequestMapping(value = "/transferencia",method = RequestMethod.POST)
-    public ResponseEntity<Void> tranferencia(@RequestBody NewTransferenciaDTO newTransferenciaDTO){
-        contaService.transferencia(newTransferenciaDTO);
-        return ResponseEntity.noContent().build();
-    }
-
 }

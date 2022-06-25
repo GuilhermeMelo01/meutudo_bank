@@ -1,7 +1,11 @@
 package com.whiz.br.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -13,18 +17,16 @@ public class Conta implements Serializable {
     private String numeroConta;
     private Double saldo;
 
-    @ManyToOne
-    @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
+    @OneToMany(mappedBy = "conta")
+    private List<Transferencia> transferencias = new ArrayList<>();
 
     public Conta(){
-
     }
-    public Conta(Long id, String numeroConta, Double saldo, Cliente cliente) {
+
+    public Conta(Long id, String numeroConta, Double saldo) {
         this.id = id;
         this.numeroConta = numeroConta;
         this.saldo = saldo;
-        this.cliente = cliente;
     }
 
     public Long getId() {
@@ -51,12 +53,12 @@ public class Conta implements Serializable {
         this.saldo = saldo;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public List<Transferencia> getTransferencias() {
+        return transferencias;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setTransferencias(List<Transferencia> transferencias) {
+        this.transferencias = transferencias;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.whiz.br.dto;
 
-import com.whiz.br.domain.Conta;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.whiz.br.domain.Transferencia;
 
 import java.io.Serializable;
 
@@ -13,9 +14,9 @@ public class NewTransferenciaDTO implements Serializable {
     public NewTransferenciaDTO() {
     }
 
-    public NewTransferenciaDTO(Conta conta, Double value) {
-        idEnv = conta.getId();
-        idRec = conta.getId();
+    public NewTransferenciaDTO(Transferencia transferencia, Double value) {
+        idEnv = transferencia.getConta().getId();
+        idRec = transferencia.getConta().getId();
         this.value = value;
     }
 

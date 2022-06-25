@@ -7,6 +7,8 @@ import com.whiz.br.enums.EstadoTransferencia;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -18,7 +20,6 @@ public class Transferencia implements Serializable {
 
     private Double value;
     private Integer estado;
-    private Integer numeroParcelas;
 
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;
@@ -28,10 +29,14 @@ public class Transferencia implements Serializable {
     @JoinColumn(name = "conta_id")
     private Conta conta;
 
+    @OneToMany(mappedBy = "transferencia")
+    private List<Parcela> parcelas = new ArrayList<>();
+
+
     public Transferencia() {
     }
 
-    public Transferencia(Long id, Double value,EstadoTransferencia estado, LocalDate date, Conta conta) {
+    public Transferencia(Long id, Double value, EstadoTransferencia estado, LocalDate date, Conta conta) {
         this.id = id;
         this.value = value;
         this.estado = (estado == null) ? null : estado.getCod();
@@ -39,12 +44,9 @@ public class Transferencia implements Serializable {
         this.conta = conta;
     }
 
-    public Transferencia(Long id, Double value, Integer numeroParcelas, LocalDate date, Conta conta) {
+    public Transferencia(Long id, EstadoTransferencia estado) {
         this.id = id;
-        this.value = value;
-        this.numeroParcelas = numeroParcelas;
-        this.date = date;
-        this.conta = conta;
+        this.estado = (estado == null) ? null : estado.getCod();
     }
 
     public Long getId() {
@@ -71,14 +73,6 @@ public class Transferencia implements Serializable {
         this.estado = estado.getCod();
     }
 
-    public Integer getNumeroParcelas() {
-        return numeroParcelas;
-    }
-
-    public void setNumeroParcelas(Integer numeroParcelas) {
-        this.numeroParcelas = numeroParcelas;
-    }
-
     public LocalDate getDate() {
         return date;
     }
@@ -93,6 +87,14 @@ public class Transferencia implements Serializable {
 
     public void setConta(Conta conta) {
         this.conta = conta;
+    }
+
+    public List<Parcela> getParcelas() {
+        return parcelas;
+    }
+
+    public void setParcelas(List<Parcela> parcelas) {
+        this.parcelas = parcelas;
     }
 
     @Override

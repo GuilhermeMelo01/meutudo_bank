@@ -1,17 +1,21 @@
 package com.whiz.br.service;
 
 import com.whiz.br.domain.Conta;
+import com.whiz.br.domain.Parcela;
 import com.whiz.br.domain.Transferencia;
 import com.whiz.br.dto.NewTransferenciaDTO;
 import com.whiz.br.dto.ReverterTransferenciaDTO;
+import com.whiz.br.dto.TransferenciaParceladaDTO;
 import com.whiz.br.enums.EstadoTransferencia;
 import com.whiz.br.repository.ContaRepository;
+import com.whiz.br.repository.ParcelaRepository;
 import com.whiz.br.repository.TransferenciaRepository;
 import com.whiz.br.service.exception.IllegalArgumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,6 +27,8 @@ public class TransferenciaService {
     private ContaRepository contaRepository;
     @Autowired
     private ContaService contaService;
+    @Autowired
+    private ParcelaRepository parcelaRepository;
 
     public Transferencia findById(Long id) {
         return transferenciaRepository.findById(id).orElseThrow();
@@ -52,11 +58,38 @@ public class TransferenciaService {
         Double valorTransferencia = transferencia.getValue();
         contaEnviadorReembolso.setSaldo(contaEnviadorReembolso.getSaldo() - valorTransferencia);
         contaRecebedorReembolso.setSaldo(contaRecebedorReembolso.getSaldo() + valorTransferencia);
+        transferenciaCancelada(transferencia);
+        transferenciaRepository.saveAll(List.of(transferencia));
         contaRepository.saveAll(List.of(contaEnviadorReembolso, contaRecebedorReembolso));
+    }
+
+    public void transferenciaParcelada(TransferenciaParceladaDTO transferenciaParceladaDTO){
+        Conta contaEnviador = contaService.findById(transferenciaParceladaDTO.getIdEnviadorTransferencia());
+        Double valor = transferenciaParceladaDTO.getValor();
+        Integer numeroParcelas = transferenciaParceladaDTO.getNumeroParcelas();
+//        LocalDate dataPagamento = transferenciaParceladaDTO.getDataPagamento();
+        double valorParcelas = valor / numeroParcelas;
+        Transferencia newTransferencia = newTransferenciaParcelada(valor, LocalDate.now(), contaEnviador);
+        List<Parcela> parcelas = new ArrayList<>();
+        for (int i = 0; i < numeroParcelas; i++) {
+            parcelas.add(new Parcela(null, valorParcelas, LocalDate.now(),
+                    newTransferencia));
+        }
+        newTransferencia.getParcelas().addAll(parcelas);
+        transferenciaRepository.saveAll(List.of(newTransferencia));
+        parcelaRepository.saveAll(parcelas);
     }
 
     private void newTransferencia(Double value, LocalDate localDate, Conta conta) {
         Transferencia newTransferencia = new Transferencia(null, value, EstadoTransferencia.CONCLUIDA, localDate, conta);
         transferenciaRepository.saveAll(List.of(newTransferencia));
+    }
+
+    private Transferencia newTransferenciaParcelada(Double value, LocalDate localDate, Conta conta) {
+        return new Transferencia(null, value, EstadoTransferencia.PROGRAMADA, localDate, conta);
+    }
+
+    private void transferenciaCancelada(Transferencia transferencia) {
+         transferencia.setEstado(EstadoTransferencia.CANCELADA);
     }
 }

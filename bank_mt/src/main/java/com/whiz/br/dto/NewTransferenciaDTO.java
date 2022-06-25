@@ -1,46 +1,45 @@
 package com.whiz.br.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.whiz.br.domain.Transferencia;
 
 import java.io.Serializable;
 
 public class NewTransferenciaDTO implements Serializable {
 
-    private Long idEnv;
-    private Long idRec;
-    private Double value;
+    private Long idEnviadorTransferencia;
+    private Long idRecebedorTransferencia;
+    private Double valorTransferencia;
 
     public NewTransferenciaDTO() {
     }
 
-    public NewTransferenciaDTO(Transferencia transferencia, Double value) {
-        idEnv = transferencia.getConta().getId();
-        idRec = transferencia.getConta().getId();
-        this.value = value;
+    public NewTransferenciaDTO(Transferencia transferencia, Double valorTransferencia) {
+        idEnviadorTransferencia = transferencia.getConta().getId();
+        idRecebedorTransferencia = transferencia.getConta().getId();
+        this.valorTransferencia = valorTransferencia;
     }
 
-    public Long getIdEnv() {
-        return idEnv;
+    public Long getIdEnviadorTransferencia() {
+        return idEnviadorTransferencia;
     }
 
-    public void setIdEnv(Long idEnv) {
-        this.idEnv = idEnv;
+    public void setIdEnviadorTransferencia(Long idEnviadorTransferencia) {
+        this.idEnviadorTransferencia = idEnviadorTransferencia;
     }
 
-    public Long getIdRec() {
-        return idRec;
+    public Long getIdRecebedorTransferencia() {
+        return idRecebedorTransferencia;
     }
 
-    public void setIdRec(Long idRec) {
-        this.idRec = idRec;
+    public void setIdRecebedorTransferencia(Long idRecebedorTransferencia) {
+        this.idRecebedorTransferencia = idRecebedorTransferencia;
     }
 
-    public Double getValue() {
-        return value;
+    public Double getValorTransferencia() {
+        return valorTransferencia;
     }
 
-    public void setValue(Double value) {
-        this.value = value;
+    public void setValorTransferencia(Double valorTransferencia) {
+        this.valorTransferencia = valorTransferencia;
     }
 }

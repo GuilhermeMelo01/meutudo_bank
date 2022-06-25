@@ -2,11 +2,11 @@ package com.whiz.br.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.whiz.br.enums.EstadoTransferencia;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -17,6 +17,8 @@ public class Transferencia implements Serializable {
     private Long id;
 
     private Double value;
+    private Integer estado;
+    private Integer numeroParcelas;
 
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;
@@ -29,9 +31,18 @@ public class Transferencia implements Serializable {
     public Transferencia() {
     }
 
-    public Transferencia(Long id, Double value, LocalDate date, Conta conta) {
+    public Transferencia(Long id, Double value,EstadoTransferencia estado, LocalDate date, Conta conta) {
         this.id = id;
         this.value = value;
+        this.estado = (estado == null) ? null : estado.getCod();
+        this.date = date;
+        this.conta = conta;
+    }
+
+    public Transferencia(Long id, Double value, Integer numeroParcelas, LocalDate date, Conta conta) {
+        this.id = id;
+        this.value = value;
+        this.numeroParcelas = numeroParcelas;
         this.date = date;
         this.conta = conta;
     }
@@ -50,6 +61,22 @@ public class Transferencia implements Serializable {
 
     public void setValue(Double value) {
         this.value = value;
+    }
+
+    public EstadoTransferencia getEstado() {
+        return EstadoTransferencia.toEnum(estado);
+    }
+
+    public void setEstado(EstadoTransferencia estado) {
+        this.estado = estado.getCod();
+    }
+
+    public Integer getNumeroParcelas() {
+        return numeroParcelas;
+    }
+
+    public void setNumeroParcelas(Integer numeroParcelas) {
+        this.numeroParcelas = numeroParcelas;
     }
 
     public LocalDate getDate() {

@@ -7,16 +7,14 @@ import java.io.Serializable;
 public class ReverterTransferenciaDTO implements Serializable {
 
     private Long idTransferencia;
-    private Long idRecptorReembolso;
-    private Long idAllowReembolso;
+    private Long idRecebedorReembolso;
 
     public ReverterTransferenciaDTO() {
     }
 
     public ReverterTransferenciaDTO(Transferencia transferencia) {
         idTransferencia = transferencia.getId();
-        idRecptorReembolso = transferencia.getConta().getId();
-        idAllowReembolso = transferencia.getConta().getId();
+        idRecebedorReembolso = transferencia.getConta().getId();
     }
 
     public Long getIdTransferencia() {
@@ -27,19 +25,12 @@ public class ReverterTransferenciaDTO implements Serializable {
         this.idTransferencia = idTransferencia;
     }
 
-    public Long getIdRecptorReembolso() {
-        return idRecptorReembolso;
+    public Long getIdRecebedorReembolso() {
+        return idRecebedorReembolso;
     }
 
-    public void setIdRecptorReembolso(Long idRecptorReembolso) {
-        this.idRecptorReembolso = idRecptorReembolso;
+    public void setIdRecebedorReembolso(Long idRecebedorReembolso) {
+        this.idRecebedorReembolso = idRecebedorReembolso;
     }
 
-    public Long getIdAllowReembolso() {
-        return idAllowReembolso;
-    }
-
-    public void setIdAllowReembolso(Long idAllowReembolso) {
-        this.idAllowReembolso = idAllowReembolso;
-    }
 }

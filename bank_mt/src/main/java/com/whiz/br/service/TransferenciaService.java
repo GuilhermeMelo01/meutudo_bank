@@ -4,6 +4,7 @@ import com.whiz.br.domain.Conta;
 import com.whiz.br.domain.Transferencia;
 import com.whiz.br.dto.NewTransferenciaDTO;
 import com.whiz.br.dto.ReverterTransferenciaDTO;
+import com.whiz.br.enums.EstadoTransferencia;
 import com.whiz.br.repository.ContaRepository;
 import com.whiz.br.repository.TransferenciaRepository;
 import com.whiz.br.service.exception.IllegalArgumentException;
@@ -28,34 +29,34 @@ public class TransferenciaService {
     }
 
     public void transferencia(NewTransferenciaDTO newTransferenciaDTO) {
-        Conta contaEnvia = contaService.findById(newTransferenciaDTO.getIdEnv());
-        Conta contaRecebe = contaService.findById(newTransferenciaDTO.getIdRec());
-        Double valor = newTransferenciaDTO.getValue();
-        Double saldoContaEnviar = contaEnvia.getSaldo();
-        if (saldoContaEnviar <= 0) {
+        Conta contaEnviador = contaService.findById(newTransferenciaDTO.getIdEnviadorTransferencia());
+        Conta contaRecebedor = contaService.findById(newTransferenciaDTO.getIdRecebedorTransferencia());
+        Double valorTransferencia = newTransferenciaDTO.getValorTransferencia();
+        Double saldoContaEnviador = contaEnviador.getSaldo();
+        if (saldoContaEnviador <= 0) {
             throw new IllegalArgumentException("Não existe saldo para fazer essa transferencia");
         }
-        if ((saldoContaEnviar - valor) < 0) {
+        if ((saldoContaEnviador - valorTransferencia) < 0) {
             throw new IllegalArgumentException("Não existe saldo para efetuar a transferencia");
         }
-        contaEnvia.setSaldo(contaEnvia.getSaldo() - valor);
-        contaRecebe.setSaldo(contaRecebe.getSaldo() + valor);
-        newTransferencia(valor, LocalDate.now(), contaEnvia);
-        contaRepository.saveAll(List.of(contaEnvia, contaRecebe));
+        contaEnviador.setSaldo(contaEnviador.getSaldo() - valorTransferencia);
+        contaRecebedor.setSaldo(contaRecebedor.getSaldo() + valorTransferencia);
+        newTransferencia(valorTransferencia, LocalDate.now(), contaEnviador);
+        contaRepository.saveAll(List.of(contaEnviador, contaRecebedor));
     }
 
-    public void reverterTransferencia(ReverterTransferenciaDTO reverterTransferenciaDTO){
+    public void reverterTransferencia(Long idEnviadorReembolso, ReverterTransferenciaDTO reverterTransferenciaDTO){
+        Conta contaEnviadorReembolso = contaService.findById(idEnviadorReembolso);
+        Conta contaRecebedorReembolso = contaService.findById(reverterTransferenciaDTO.getIdRecebedorReembolso());
         Transferencia transferencia = findById(reverterTransferenciaDTO.getIdTransferencia());
-        Conta contaRecptorReembolso = contaService.findById(reverterTransferenciaDTO.getIdRecptorReembolso());
-        Conta contaAllowReembolso = contaService.findById(reverterTransferenciaDTO.getIdAllowReembolso());
-        Double value = transferencia.getValue();
-        contaAllowReembolso.setSaldo(contaAllowReembolso.getSaldo() - value);
-        contaRecptorReembolso.setSaldo(contaRecptorReembolso.getSaldo() + value);
-        contaRepository.saveAll(List.of(contaAllowReembolso, contaRecptorReembolso));
+        Double valorTransferencia = transferencia.getValue();
+        contaEnviadorReembolso.setSaldo(contaEnviadorReembolso.getSaldo() - valorTransferencia);
+        contaRecebedorReembolso.setSaldo(contaRecebedorReembolso.getSaldo() + valorTransferencia);
+        contaRepository.saveAll(List.of(contaEnviadorReembolso, contaRecebedorReembolso));
     }
 
     private void newTransferencia(Double value, LocalDate localDate, Conta conta) {
-        Transferencia newTransferencia = new Transferencia(null, value, localDate, conta);
+        Transferencia newTransferencia = new Transferencia(null, value, EstadoTransferencia.CONCLUIDA, localDate, conta);
         transferenciaRepository.saveAll(List.of(newTransferencia));
     }
 }

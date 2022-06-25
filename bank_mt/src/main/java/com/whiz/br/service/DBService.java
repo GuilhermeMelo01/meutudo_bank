@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,18 +21,18 @@ public class DBService {
     @Autowired
     private TransferenciaRepository transferenciaRepository;
 
-    public void instatiateTestDataBase() throws ParseException {
-
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    public void instatiateTestDataBase(){
 
         Conta cont1 = new Conta(null, "8054", 1220.0);
         Conta cont2 = new Conta(null, "8183", 4330.0);
 
-        Transferencia t1 = new Transferencia(null, sdf.parse("11/05/2021"), cont1);
+        Transferencia t1 = new Transferencia(null, 300.0, LocalDate.of(2021, 3,11), cont1);
+        Transferencia t2 = new Transferencia(null, 150.0, LocalDate.of(2022, 2, 28), cont2);
 
         cont1.getTransferencias().addAll(List.of(t1));
+        cont2.getTransferencias().addAll(List.of(t2));
 
         contaRepository.saveAll(List.of(cont1, cont2));
-        transferenciaRepository.saveAll(List.of(t1));
+        transferenciaRepository.saveAll(List.of(t1, t2));
     }
 }

@@ -1,6 +1,7 @@
 package com.whiz.br.resource;
 
 import com.whiz.br.dto.NewTransferenciaDTO;
+import com.whiz.br.dto.ReverterTransferenciaDTO;
 import com.whiz.br.service.TransferenciaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,12 @@ public class TransferenciaResource {
     @RequestMapping(value = "/transferir", method = RequestMethod.POST)
     public ResponseEntity<Void> tranferencia(@RequestBody NewTransferenciaDTO newTransferenciaDTO){
         transferenciaService.transferencia(newTransferenciaDTO);
+        return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value = "/reverter", method = RequestMethod.POST)
+    public ResponseEntity<Void> reverter(@RequestBody ReverterTransferenciaDTO reverterTransferenciaDTO){
+        transferenciaService.reverterTransferencia(reverterTransferenciaDTO);
         return ResponseEntity.noContent().build();
     }
 }

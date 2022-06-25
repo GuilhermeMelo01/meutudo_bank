@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -15,8 +16,10 @@ public class Transferencia implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @JsonFormat(pattern = "dd/MM/yyyy")
-    private Date date;
+    private Double value;
+
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private LocalDate date;
 
     @JsonIgnore
     @ManyToOne
@@ -26,8 +29,9 @@ public class Transferencia implements Serializable {
     public Transferencia() {
     }
 
-    public Transferencia(Long id, Date date, Conta conta) {
+    public Transferencia(Long id, Double value, LocalDate date, Conta conta) {
         this.id = id;
+        this.value = value;
         this.date = date;
         this.conta = conta;
     }
@@ -40,11 +44,19 @@ public class Transferencia implements Serializable {
         this.id = id;
     }
 
-    public Date getDate() {
+    public Double getValue() {
+        return value;
+    }
+
+    public void setValue(Double value) {
+        this.value = value;
+    }
+
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

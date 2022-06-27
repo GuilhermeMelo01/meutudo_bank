@@ -2,6 +2,7 @@ package com.whiz.br.dto;
 
 import com.whiz.br.domain.Transferencia;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 public class NewTransferenciaDTO implements Serializable {

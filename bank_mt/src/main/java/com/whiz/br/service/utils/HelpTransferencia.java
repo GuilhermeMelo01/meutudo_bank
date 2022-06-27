@@ -15,5 +15,4 @@ public interface HelpTransferencia {
             (Double value, EstadoTransferencia estado, LocalDate localDate, Conta conta);
 
     void transferenciaCancelada(Transferencia transferencia, EstadoTransferencia estado);
-
 }

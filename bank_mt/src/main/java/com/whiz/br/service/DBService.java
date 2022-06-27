@@ -34,9 +34,9 @@ public class DBService {
         cont1.getTransferencias().addAll(List.of(t1));
         cont2.getTransferencias().addAll(List.of(t2));
 
-        Parcela p1 = new Parcela(null, t1.getValue() / 3, LocalDate.now().plusMonths(1), t1);
-        Parcela p2 = new Parcela(null, t1.getValue() / 3, LocalDate.now().plusMonths(2), t1);
-        Parcela p3 = new Parcela(null, t1.getValue() / 3, LocalDate.now().plusMonths(3), t1);
+        Parcela p1 = new Parcela(null, t1.getValue() / 3, t1.getDate().plusMonths(1), t1);
+        Parcela p2 = new Parcela(null, t1.getValue() / 3, t1.getDate().plusMonths(2), t1);
+        Parcela p3 = new Parcela(null, t1.getValue() / 3, t1.getDate().plusMonths(3), t1);
         t1.getParcelas().addAll(List.of(p1, p2, p3));
 
         contaRepository.saveAll(List.of(cont1, cont2));

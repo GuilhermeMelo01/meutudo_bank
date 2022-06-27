@@ -47,7 +47,8 @@ public class TransferenciaService {
         }
         contaEnviador.setSaldo(contaEnviador.getSaldo() - valorTransferencia);
         contaRecebedor.setSaldo(contaRecebedor.getSaldo() + valorTransferencia);
-        newTransferencia(valorTransferencia, LocalDate.now(), contaEnviador);
+        Transferencia transferencia = newTransferencia(valorTransferencia, LocalDate.now(), contaEnviador);
+        transferenciaRepository.saveAll(List.of(transferencia));
         contaRepository.saveAll(List.of(contaEnviador, contaRecebedor));
     }
 
@@ -67,22 +68,21 @@ public class TransferenciaService {
         Conta contaEnviador = contaService.findById(transferenciaParceladaDTO.getIdEnviadorTransferencia());
         Double valor = transferenciaParceladaDTO.getValor();
         Integer numeroParcelas = transferenciaParceladaDTO.getNumeroParcelas();
-//        LocalDate dataPagamento = transferenciaParceladaDTO.getDataPagamento();
+        LocalDate dataPagamentoPlus = LocalDate.now().plusMonths(1);
         double valorParcelas = valor / numeroParcelas;
         Transferencia newTransferencia = newTransferenciaParcelada(valor, LocalDate.now(), contaEnviador);
         List<Parcela> parcelas = new ArrayList<>();
         for (int i = 0; i < numeroParcelas; i++) {
-            parcelas.add(new Parcela(null, valorParcelas, LocalDate.now(),
-                    newTransferencia));
+            parcelas.add(new Parcela(null, valorParcelas, dataPagamentoPlus, newTransferencia));
+            dataPagamentoPlus = dataPagamentoPlus.plusMonths(1);
         }
         newTransferencia.getParcelas().addAll(parcelas);
         transferenciaRepository.saveAll(List.of(newTransferencia));
         parcelaRepository.saveAll(parcelas);
     }
 
-    private void newTransferencia(Double value, LocalDate localDate, Conta conta) {
-        Transferencia newTransferencia = new Transferencia(null, value, EstadoTransferencia.CONCLUIDA, localDate, conta);
-        transferenciaRepository.saveAll(List.of(newTransferencia));
+    private Transferencia newTransferencia(Double value, LocalDate localDate, Conta conta) {
+        return new Transferencia(null, value, EstadoTransferencia.CONCLUIDA, localDate, conta);
     }
 
     private Transferencia newTransferenciaParcelada(Double value, LocalDate localDate, Conta conta) {

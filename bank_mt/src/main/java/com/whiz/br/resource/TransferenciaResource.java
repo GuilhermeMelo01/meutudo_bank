@@ -1,17 +1,13 @@
 package com.whiz.br.resource;
 
-import com.whiz.br.domain.Conta;
+import com.whiz.br.domain.Transferencia;
 import com.whiz.br.dto.NewTransferenciaDTO;
 import com.whiz.br.dto.ReverterTransferenciaDTO;
 import com.whiz.br.dto.TransferenciaParceladaDTO;
-import com.whiz.br.service.ContaService;
 import com.whiz.br.service.TransferenciaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.net.URI;
 
 @RestController
 @RequestMapping("/transferencias")
@@ -19,6 +15,12 @@ public class TransferenciaResource {
 
     @Autowired
     private TransferenciaService transferenciaService;
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Transferencia> findById(@PathVariable Long id){
+        Transferencia transferencia = transferenciaService.findById(id);
+        return ResponseEntity.ok().body(transferencia);
+    }
 
     @RequestMapping(value = "/transferir", method = RequestMethod.POST)
     public ResponseEntity<Void> tranferencia(@RequestBody NewTransferenciaDTO newTransferenciaDTO){

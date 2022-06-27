@@ -1,7 +1,6 @@
 package com.whiz.br.dto;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 public class TransferenciaParceladaDTO implements Serializable {
 
@@ -12,8 +11,7 @@ public class TransferenciaParceladaDTO implements Serializable {
     public TransferenciaParceladaDTO(){
     }
 
-    public TransferenciaParceladaDTO(Long idEnviadorTransferencia, Double valor,
-                                     Integer numeroParcelas) {
+    public TransferenciaParceladaDTO(Long idEnviadorTransferencia, Double valor, Integer numeroParcelas) {
         this.idEnviadorTransferencia = idEnviadorTransferencia;
         this.valor = valor;
         this.numeroParcelas = numeroParcelas;

@@ -32,6 +32,7 @@ public class Parcela implements Serializable {
         this.valorDaParcela = valorDaParcela;
         this.dataPagamento = dataPagamento;
     }
+
     public Parcela(Long id, Double valorDaParcela, LocalDate dataPagamento, Transferencia transferencia) {
         this.id = id;
         this.valorDaParcela = valorDaParcela;

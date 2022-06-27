@@ -28,15 +28,15 @@ public class DBService {
         Conta cont1 = new Conta(null, "8054", 1220.0);
         Conta cont2 = new Conta(null, "8183", 4330.0);
 
-        Transferencia t1 = new Transferencia(null, 300.0, EstadoTransferencia.CONCLUIDA, LocalDate.of(2021, 3, 11), cont1);
+        Transferencia t1 = new Transferencia(null, 300.0, EstadoTransferencia.PROGRAMADA, LocalDate.of(2021, 3, 11), cont1);
         Transferencia t2 = new Transferencia(null, 150.0, EstadoTransferencia.CONCLUIDA, LocalDate.of(2022, 2, 28), cont2);
 
         cont1.getTransferencias().addAll(List.of(t1));
         cont2.getTransferencias().addAll(List.of(t2));
 
-        Parcela p1 = new Parcela(null, t1.getValue() / 3, LocalDate.now(), t1);
-        Parcela p2 = new Parcela(null, t1.getValue() / 3, LocalDate.now(), t1);
-        Parcela p3 = new Parcela(null, t1.getValue() / 3, LocalDate.now(), t1);
+        Parcela p1 = new Parcela(null, t1.getValue() / 3, LocalDate.now().plusMonths(1), t1);
+        Parcela p2 = new Parcela(null, t1.getValue() / 3, LocalDate.now().plusMonths(2), t1);
+        Parcela p3 = new Parcela(null, t1.getValue() / 3, LocalDate.now().plusMonths(3), t1);
         t1.getParcelas().addAll(List.of(p1, p2, p3));
 
         contaRepository.saveAll(List.of(cont1, cont2));

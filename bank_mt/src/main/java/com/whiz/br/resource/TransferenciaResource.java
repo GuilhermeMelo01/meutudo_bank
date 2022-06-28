@@ -5,22 +5,31 @@ import com.whiz.br.dto.NewTransferenciaDTO;
 import com.whiz.br.dto.ReverterTransferenciaDTO;
 import com.whiz.br.dto.TransferenciaParceladaDTO;
 import com.whiz.br.service.TransferenciaService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/transferencias")
 public class TransferenciaResource {
 
-    @Autowired
-    private TransferenciaService transferenciaService;
+    private final TransferenciaService transferenciaService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Transferencia> findById(@PathVariable Long id){
         Transferencia transferencia = transferenciaService.findById(id);
         return ResponseEntity.ok().body(transferencia);
     }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<Transferencia>> findAll(){
+        List<Transferencia> transferencias = transferenciaService.listAll();
+        return ResponseEntity.ok().body(transferencias);
+    }
+
 
     @RequestMapping(value = "/transferir", method = RequestMethod.POST)
     public ResponseEntity<Void> tranferencia(@RequestBody NewTransferenciaDTO newTransferenciaDTO){
@@ -36,7 +45,7 @@ public class TransferenciaResource {
     }
 
     @RequestMapping(value = "/parcelada", method = RequestMethod.POST)
-    public ResponseEntity<Void> tranferencia(@RequestBody TransferenciaParceladaDTO transferenciaParceladaDTO){
+    public ResponseEntity<Void> tranferenciaParcelada(@RequestBody TransferenciaParceladaDTO transferenciaParceladaDTO){
         transferenciaService.transferenciaParcelada(transferenciaParceladaDTO);
         return ResponseEntity.noContent().build();
     }

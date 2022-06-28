@@ -3,7 +3,7 @@ package com.whiz.br.resource;
 
 import com.whiz.br.domain.Conta;
 import com.whiz.br.service.ContaService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("contas")
 public class ContaResource {
 
-    @Autowired
-    private ContaService contaService;
+    private final ContaService contaService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Conta>> findAll(){

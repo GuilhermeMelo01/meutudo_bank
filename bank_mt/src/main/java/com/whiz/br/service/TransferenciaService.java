@@ -11,23 +11,20 @@ import com.whiz.br.repository.ContaRepository;
 import com.whiz.br.repository.ParcelaRepository;
 import com.whiz.br.repository.TransferenciaRepository;
 import com.whiz.br.service.utils.HelpTransferencia;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class TransferenciaService {
 
-    @Autowired
-    private TransferenciaRepository transferenciaRepository;
-    @Autowired
-    private ContaRepository contaRepository;
-    @Autowired
-    private ContaService contaService;
-    @Autowired
-    private ParcelaRepository parcelaRepository;
+    private final TransferenciaRepository transferenciaRepository;
+    private final ContaRepository contaRepository;
+    private final ContaService contaService;
+    private final ParcelaRepository parcelaRepository;
 
     public Transferencia findById(Long id) {
         return transferenciaRepository.findById(id).orElseThrow();

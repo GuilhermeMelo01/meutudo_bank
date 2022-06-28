@@ -47,6 +47,10 @@ public class TransferenciaService {
         contaRecebedor.setSaldo(contaRecebedor.getSaldo() + valorTransferencia);
         Transferencia transferencia = HelpTransferencia.newTransferencia(valorTransferencia,
                 EstadoTransferencia.CONCLUIDA, LocalDate.now(), contaEnviador);
+        List<Parcela> parcelas = HelpTransferencia.newParcelas(1,
+                valorTransferencia, LocalDate.now(), transferencia);
+        transferencia.getParcelas().addAll(parcelas);
+        parcelaRepository.saveAll(parcelas);
         transferenciaRepository.saveAll(List.of(transferencia));
         contaRepository.saveAll(List.of(contaEnviador, contaRecebedor));
     }

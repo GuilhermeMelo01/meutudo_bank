@@ -26,10 +26,9 @@ public class TransferenciaResource {
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Transferencia>> findAll(){
-        List<Transferencia> transferencias = transferenciaService.listAll();
+        List<Transferencia> transferencias = transferenciaService.findAll();
         return ResponseEntity.ok().body(transferencias);
     }
-
 
     @RequestMapping(value = "/transferir", method = RequestMethod.POST)
     public ResponseEntity<Void> tranferencia(@RequestBody NewTransferenciaDTO newTransferenciaDTO){

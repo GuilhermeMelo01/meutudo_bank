@@ -30,7 +30,7 @@ public class TransferenciaService {
         return transferenciaRepository.findById(id).orElseThrow();
     }
 
-    public List<Transferencia> listAll() {
+    public List<Transferencia> findAll() {
         return transferenciaRepository.findAll();
     }
 

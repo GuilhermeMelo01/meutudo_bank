@@ -1,11 +1,15 @@
 package com.whiz.br.dto;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 public class TransferenciaParceladaDTO implements Serializable {
 
+    @NotEmpty(message = "that field cannot be empty")
     private Long idEnviadorTransferencia;
+    @NotEmpty(message = "that field cannot be empty")
     private Double valor;
+    @NotEmpty(message = "that field cannot be empty")
     private Integer numeroParcelas;
 
     public TransferenciaParceladaDTO(){

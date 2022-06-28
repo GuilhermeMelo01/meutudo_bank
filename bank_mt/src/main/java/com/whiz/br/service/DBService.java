@@ -72,19 +72,9 @@ public class DBService {
         Parcela p1 = new Parcela(null, t1.getValue() / 3, t1.getDate().plusMonths(1), t1);
         Parcela p2 = new Parcela(null, t1.getValue() / 3, t1.getDate().plusMonths(2), t1);
         Parcela p3 = new Parcela(null, t1.getValue() / 3, t1.getDate().plusMonths(3), t1);
-        //T2
-        Parcela p4 = new Parcela(null, t2.getValue(), t2.getDate(), t2);
         //T3
         Parcela p5 = new Parcela(null, t3.getValue() / 2, t3.getDate().plusMonths(1), t3);
-        Parcela p6 = new Parcela(null, t3.getValue() / 2, t2.getDate().plusMonths(2), t3);
-        //T4
-        Parcela p7 = new Parcela(null, t4.getValue(), t2.getDate(), t4);
-        //T5
-        Parcela p8 = new Parcela(null, t5.getValue(), t5.getDate(), t5);
-        //T6
-        Parcela p9 = new Parcela(null, t6.getValue(), t6.getDate(), t6);
-        //T7
-        Parcela p10 = new Parcela(null, t7.getValue(), t7.getDate(), t7);
+        Parcela p6 = new Parcela(null, t3.getValue() / 2, t3.getDate().plusMonths(2), t3);
         //T8
         Parcela p11 = new Parcela(null, t8.getValue() / 4, t8.getDate().plusMonths(1), t8);
         Parcela p12 = new Parcela(null, t8.getValue() / 4, t8.getDate().plusMonths(2), t8);
@@ -93,26 +83,15 @@ public class DBService {
         //T9
         Parcela p15 = new Parcela(null, t9.getValue() / 2, t9.getDate(), t9);
         Parcela p16 = new Parcela(null, t9.getValue() / 2, t9.getDate(), t9);
-        //T10
-        Parcela p17 = new Parcela(null, t10.getValue(), t10.getDate(), t10);
-        //T11
-        Parcela p18 = new Parcela(null, t11.getValue(), t11.getDate(), t11);
 
 
         t1.getParcelas().addAll(List.of(p1, p2, p3));
-        t2.getParcelas().addAll(List.of(p4));
         t3.getParcelas().addAll(List.of(p5, p6));
-        t4.getParcelas().addAll(List.of(p7));
-        t5.getParcelas().addAll(List.of(p8));
-        t6.getParcelas().addAll(List.of(p9));
-        t7.getParcelas().addAll(List.of(p10));
         t8.getParcelas().addAll(List.of(p11, p12, p13, p14));
         t9.getParcelas().addAll(List.of(p15, p16));
-        t10.getParcelas().addAll(List.of(p17));
-        t11.getParcelas().addAll(List.of(p18));
 
         contaRepository.saveAll(List.of(cont1, cont2, cont3, cont4, cont5, cont6, cont7, cont8, cont9));
         transferenciaRepository.saveAll(List.of(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
-        parcelaRepository.saveAll(List.of(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18));
+        parcelaRepository.saveAll(List.of(p1, p2, p3, p5, p6, p11, p12, p13, p14, p15, p16));
     }
 }

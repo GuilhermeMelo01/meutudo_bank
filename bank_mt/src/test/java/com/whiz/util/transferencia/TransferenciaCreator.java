@@ -1,8 +1,7 @@
-package com.whiz.util;
+package com.whiz.util.transferencia;
 
 import com.whiz.br.domain.Conta;
 import com.whiz.br.domain.Transferencia;
-import com.whiz.br.dto.NewTransferenciaDTO;
 import com.whiz.br.enums.EstadoTransferencia;
 
 import java.time.LocalDate;
@@ -19,8 +18,8 @@ public class TransferenciaCreator {
                 new Conta());
     }
 
-    public static Transferencia creatorValidUpdateTransferencia(){
-        return new Transferencia(1L, 500.0, EstadoTransferencia.CANCELADA, LocalDate.now(),
+    public static Transferencia creatorValidReverterTransferencia(){
+        return new Transferencia(2L, 500.0, EstadoTransferencia.CANCELADA, LocalDate.now(),
                 new Conta());
     }
 }

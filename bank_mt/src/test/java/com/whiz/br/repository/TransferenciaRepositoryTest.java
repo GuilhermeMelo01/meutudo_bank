@@ -2,7 +2,7 @@ package com.whiz.br.repository;
 
 import com.whiz.br.domain.Transferencia;
 import com.whiz.br.enums.EstadoTransferencia;
-import com.whiz.util.TransferenciaCreator;
+import com.whiz.util.transferencia.TransferenciaCreator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

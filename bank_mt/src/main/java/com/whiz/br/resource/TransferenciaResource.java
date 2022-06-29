@@ -37,8 +37,8 @@ public class TransferenciaResource {
     }
 
     @RequestMapping(value = "/{idEnviadorReembolso}/reverter", method = RequestMethod.PUT)
-    public ResponseEntity<Void> reverter(@PathVariable Long idEnviadorReembolso,
-                                         @RequestBody ReverterTransferenciaDTO reverterTransferenciaDTO){
+    public ResponseEntity<Void> reverterTransferencia(@PathVariable Long idEnviadorReembolso,
+                                                      @RequestBody ReverterTransferenciaDTO reverterTransferenciaDTO){
         transferenciaService.reverterTransferencia(idEnviadorReembolso, reverterTransferenciaDTO);
         return ResponseEntity.noContent().build();
     }

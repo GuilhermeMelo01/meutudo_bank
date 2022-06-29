@@ -3,10 +3,12 @@ package com.whiz.br.resource;
 import com.whiz.br.domain.Transferencia;
 import com.whiz.br.dto.NewTransferenciaDTO;
 import com.whiz.br.dto.ReverterTransferenciaDTO;
+import com.whiz.br.dto.TransferenciaParceladaDTO;
 import com.whiz.br.service.TransferenciaService;
-import com.whiz.util.TransferenciaCreator;
-import com.whiz.util.TransferenciaCreatorDTO;
-import com.whiz.util.TransferenciaUpdateDTO;
+import com.whiz.util.transferencia.TransferenciaCreator;
+import com.whiz.util.transferencia.TransferenciaDTOCreator;
+import com.whiz.util.transferencia.TransferenciaParceladaDTOCreator;
+import com.whiz.util.transferencia.TransferenciaDTOReverter;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -42,6 +44,13 @@ class TransferenciaResourceTest {
 
         BDDMockito.doNothing().when(transferenciaServiceMock)
                 .transferencia(ArgumentMatchers.any(NewTransferenciaDTO.class));
+
+        BDDMockito.doNothing().when(transferenciaServiceMock)
+                .reverterTransferencia(ArgumentMatchers.any(Long.class),
+                        ArgumentMatchers.any(ReverterTransferenciaDTO.class));
+
+        BDDMockito.doNothing().when(transferenciaServiceMock)
+                .transferenciaParcelada(ArgumentMatchers.any(TransferenciaParceladaDTO.class));
     }
 
     @Test
@@ -66,17 +75,53 @@ class TransferenciaResourceTest {
     }
 
     @Test
-    @DisplayName("tranferencia insert Transferencia when successful")
-    void tranferencia_InsertTransferencia_WhenSuccessful() {
+    @DisplayName("tranferencia insert Transferencia is different from null when successful")
+    void tranferencia_InsertTransferenciaIsDifferentFromNull_WhenSuccessful() {
 
         Assertions.assertThatCode(() -> transferenciaResource.tranferencia(
-                TransferenciaCreatorDTO.creatorNewTransferenciaDTOToBeSaved()))
+                        TransferenciaDTOCreator.creatorNewTransferenciaDTOToBeSaved()))
                 .doesNotThrowAnyException();
 
         ResponseEntity<Void> entity = transferenciaResource.tranferencia(
-                TransferenciaCreatorDTO.creatorNewTransferenciaDTOToBeSaved());
+                TransferenciaDTOCreator.creatorNewTransferenciaDTOToBeSaved());
 
         Assertions.assertThat(entity).isNotNull();
         Assertions.assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
     }
+
+    @Test
+    @DisplayName("reverter tranferencia idEnviadorReembolso is different from idRecebedorReembolso when successful")
+    void reverterTransferencia_TransferenciaIdIsNotEqual_WhenSuccessful() {
+        Long idEnviadorReembolso = TransferenciaCreator.creatorValidTransferencia().getId();
+        Long idRecebedorReembolso = TransferenciaDTOReverter.creatorValidUpdateTransferencia().getIdRecebedorReembolso();
+
+        Assertions.assertThatCode(() -> transferenciaResource.reverterTransferencia(
+                TransferenciaCreator.creatorValidTransferencia().getId(),
+                TransferenciaDTOReverter.creatorValidUpdateTransferencia()))
+                .doesNotThrowAnyException();
+
+        ResponseEntity<Void> entity = transferenciaResource.reverterTransferencia(
+                TransferenciaCreator.creatorValidTransferencia().getId(),
+                TransferenciaDTOReverter.creatorValidUpdateTransferencia());
+
+        Assertions.assertThat(idEnviadorReembolso).isNotEqualTo(idRecebedorReembolso);
+        Assertions.assertThat(entity).isNotNull();
+        Assertions.assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+    }
+
+    @Test
+    @DisplayName("tranferencia Parcelada insert Transferencia is different from null when successful")
+    void tranferenciaParcelada_InsertTransferenciaIsDifferentFromNull_WhenSuccessful() {
+
+        Assertions.assertThatCode(() -> transferenciaResource.tranferenciaParcelada(
+                        TransferenciaParceladaDTOCreator.creatorVadidTransferenciaParcelada()))
+                .doesNotThrowAnyException();
+
+        ResponseEntity<Void> entity = transferenciaResource.tranferenciaParcelada(
+                TransferenciaParceladaDTOCreator.creatorVadidTransferenciaParcelada());
+
+        Assertions.assertThat(entity).isNotNull();
+        Assertions.assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+    }
+
 }

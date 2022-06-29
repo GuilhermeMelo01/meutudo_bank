@@ -1,13 +1,8 @@
-package com.whiz.util;
+package com.whiz.util.transferencia;
 
-import com.whiz.br.domain.Conta;
-import com.whiz.br.domain.Transferencia;
 import com.whiz.br.dto.NewTransferenciaDTO;
-import com.whiz.br.enums.EstadoTransferencia;
 
-import java.time.LocalDate;
-
-public class TransferenciaCreatorDTO {
+public class TransferenciaDTOCreator {
 
     public static NewTransferenciaDTO creatorNewTransferenciaDTOToBeSaved(){
         return new NewTransferenciaDTO(TransferenciaCreator.creatorTransferenciaToBeSaved(),

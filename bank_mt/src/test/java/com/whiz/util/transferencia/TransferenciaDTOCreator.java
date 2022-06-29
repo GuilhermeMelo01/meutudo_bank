@@ -6,8 +6,6 @@ public class TransferenciaDTOCreator {
 
     public static NewTransferenciaDTO creatorNewTransferenciaDTOToBeSaved(){
         return new NewTransferenciaDTO(TransferenciaCreator.creatorTransferenciaToBeSaved(),
-                TransferenciaCreator.creatorTransferenciaToBeSaved().getValue());
+                TransferenciaCreator.creatorTransferenciaToBeSaved().getValor());
     }
-
-
 }

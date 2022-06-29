@@ -67,20 +67,20 @@ public class DBService {
         cont9.getTransferencias().addAll(List.of(t6));
 
         //T1
-        Parcela p1 = new Parcela(null, t1.getValue() / 3, t1.getDate().plusMonths(1), t1);
-        Parcela p2 = new Parcela(null, t1.getValue() / 3, t1.getDate().plusMonths(2), t1);
-        Parcela p3 = new Parcela(null, t1.getValue() / 3, t1.getDate().plusMonths(3), t1);
+        Parcela p1 = new Parcela(null, t1.getValor() / 3, t1.getData().plusMonths(1), t1);
+        Parcela p2 = new Parcela(null, t1.getValor() / 3, t1.getData().plusMonths(2), t1);
+        Parcela p3 = new Parcela(null, t1.getValor() / 3, t1.getData().plusMonths(3), t1);
         //T3
-        Parcela p5 = new Parcela(null, t3.getValue() / 2, t3.getDate().plusMonths(1), t3);
-        Parcela p6 = new Parcela(null, t3.getValue() / 2, t3.getDate().plusMonths(2), t3);
+        Parcela p5 = new Parcela(null, t3.getValor() / 2, t3.getData().plusMonths(1), t3);
+        Parcela p6 = new Parcela(null, t3.getValor() / 2, t3.getData().plusMonths(2), t3);
         //T8
-        Parcela p11 = new Parcela(null, t8.getValue() / 4, t8.getDate().plusMonths(1), t8);
-        Parcela p12 = new Parcela(null, t8.getValue() / 4, t8.getDate().plusMonths(2), t8);
-        Parcela p13 = new Parcela(null, t8.getValue() / 4, t8.getDate().plusMonths(3), t8);
-        Parcela p14 = new Parcela(null, t8.getValue() / 4, t8.getDate().plusMonths(4), t8);
+        Parcela p11 = new Parcela(null, t8.getValor() / 4, t8.getData().plusMonths(1), t8);
+        Parcela p12 = new Parcela(null, t8.getValor() / 4, t8.getData().plusMonths(2), t8);
+        Parcela p13 = new Parcela(null, t8.getValor() / 4, t8.getData().plusMonths(3), t8);
+        Parcela p14 = new Parcela(null, t8.getValor() / 4, t8.getData().plusMonths(4), t8);
         //T9
-        Parcela p15 = new Parcela(null, t9.getValue() / 2, t9.getDate(), t9);
-        Parcela p16 = new Parcela(null, t9.getValue() / 2, t9.getDate(), t9);
+        Parcela p15 = new Parcela(null, t9.getValor() / 2, t9.getData(), t9);
+        Parcela p16 = new Parcela(null, t9.getValor() / 2, t9.getData(), t9);
 
 
         t1.getParcelas().addAll(List.of(p1, p2, p3));

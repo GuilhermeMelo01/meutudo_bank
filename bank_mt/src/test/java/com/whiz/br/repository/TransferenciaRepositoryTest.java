@@ -34,10 +34,10 @@ class TransferenciaRepositoryTest {
         Transferencia savedtransferencia = TransferenciaCreator.creatorTransferenciaToBeSaved();
         this.transferenciaRepository.save(savedtransferencia);
 
-        Assertions.assertThat(savedtransferencia.getValue()).isEqualTo(TransferenciaCreator.creatorTransferenciaToBeSaved().getValue());
+        Assertions.assertThat(savedtransferencia.getValor()).isEqualTo(TransferenciaCreator.creatorTransferenciaToBeSaved().getValor());
         Assertions.assertThat(savedtransferencia.getEstado()).isEqualTo(TransferenciaCreator.creatorTransferenciaToBeSaved().getEstado());
-        Assertions.assertThat(savedtransferencia.getDate()).isEqualTo(TransferenciaCreator.creatorTransferenciaToBeSaved().getDate());
-        Assertions.assertThat(savedtransferencia.getValue()).isEqualTo(TransferenciaCreator.creatorTransferenciaToBeSaved().getValue());
+        Assertions.assertThat(savedtransferencia.getData()).isEqualTo(TransferenciaCreator.creatorTransferenciaToBeSaved().getData());
+        Assertions.assertThat(savedtransferencia.getValor()).isEqualTo(TransferenciaCreator.creatorTransferenciaToBeSaved().getValor());
     }
 
     @Test
@@ -46,9 +46,9 @@ class TransferenciaRepositoryTest {
         Transferencia savedtransferencia = TransferenciaCreator.creatorTransferenciaToBeSaved();
         this.transferenciaRepository.save(savedtransferencia);
 
-        Assertions.assertThat(savedtransferencia.getValue()).isNotNull();
-        Assertions.assertThat(savedtransferencia.getValue()).isNotNull();
-        Assertions.assertThat(savedtransferencia.getValue()).isGreaterThan(0);
+        Assertions.assertThat(savedtransferencia.getValor()).isNotNull();
+        Assertions.assertThat(savedtransferencia.getValor()).isNotNull();
+        Assertions.assertThat(savedtransferencia.getValor()).isGreaterThan(0);
     }
 
     @Test
@@ -57,7 +57,7 @@ class TransferenciaRepositoryTest {
         Transferencia savedtransferencia = TransferenciaCreator.creatorTransferenciaToBeSaved();
         this.transferenciaRepository.save(savedtransferencia);
 
-        Assertions.assertThat(savedtransferencia.getValue()).isLessThan(1000);
+        Assertions.assertThat(savedtransferencia.getValor()).isLessThan(1000);
     }
 
     @Test
@@ -65,25 +65,25 @@ class TransferenciaRepositoryTest {
     void update_CheckIfAllValuesTransferenciaHasBeenModified_WhenSuccessful() {
         Transferencia savedtransferencia = TransferenciaCreator.creatorTransferenciaToBeSaved();
         savedtransferencia.setId(99L);
-        savedtransferencia.setValue(400.0);
+        savedtransferencia.setValor(400.0);
         savedtransferencia.setEstado(EstadoTransferencia.PROGRAMADA);
-        savedtransferencia.setDate(LocalDate.now().plusMonths(1));
+        savedtransferencia.setData(LocalDate.now().plusMonths(1));
         this.transferenciaRepository.save(savedtransferencia);
 
         Assertions.assertThat(savedtransferencia.getId()).isNotEqualTo(TransferenciaCreator.creatorTransferenciaToBeSaved().getId());
-        Assertions.assertThat(savedtransferencia.getValue()).isNotEqualTo(TransferenciaCreator.creatorTransferenciaToBeSaved().getValue());
+        Assertions.assertThat(savedtransferencia.getValor()).isNotEqualTo(TransferenciaCreator.creatorTransferenciaToBeSaved().getValor());
         Assertions.assertThat(savedtransferencia.getEstado()).isNotEqualTo(TransferenciaCreator.creatorTransferenciaToBeSaved().getEstado());
-        Assertions.assertThat(savedtransferencia.getDate()).isNotEqualTo(TransferenciaCreator.creatorTransferenciaToBeSaved().getDate());
+        Assertions.assertThat(savedtransferencia.getData()).isNotEqualTo(TransferenciaCreator.creatorTransferenciaToBeSaved().getData());
     }
 
     @Test
     @DisplayName("update Transferencia check if the value has been modified when successful")
     void update_TransferenciaCheckIfValueHasBeenModified_WhenSuccessful() {
         Transferencia savedtransferencia = TransferenciaCreator.creatorTransferenciaToBeSaved();
-        savedtransferencia.setValue(400.0);
+        savedtransferencia.setValor(400.0);
         this.transferenciaRepository.save(savedtransferencia);
 
-        Assertions.assertThat(savedtransferencia.getValue()).isNotEqualTo(TransferenciaCreator.creatorTransferenciaToBeSaved().getValue());
+        Assertions.assertThat(savedtransferencia.getValor()).isNotEqualTo(TransferenciaCreator.creatorTransferenciaToBeSaved().getValor());
     }
 
     @Test
@@ -100,10 +100,10 @@ class TransferenciaRepositoryTest {
     @DisplayName("update check if new Transferencia date is after or equal to old Transferencia has been modified when successful")
     void update_CheckIfNewTransferenciaDateIsAfterOrEqualOldTransferencia_WhenSuccessful() {
         Transferencia savedtransferencia = TransferenciaCreator.creatorTransferenciaToBeSaved();
-        savedtransferencia.setDate(TransferenciaCreator.creatorTransferenciaToBeSaved().getDate().plusMonths(1));
+        savedtransferencia.setData(TransferenciaCreator.creatorTransferenciaToBeSaved().getData().plusMonths(1));
         this.transferenciaRepository.save(savedtransferencia);
 
-        Assertions.assertThat(savedtransferencia.getDate()).isAfterOrEqualTo(TransferenciaCreator.creatorTransferenciaToBeSaved().getDate());
+        Assertions.assertThat(savedtransferencia.getData()).isAfterOrEqualTo(TransferenciaCreator.creatorTransferenciaToBeSaved().getData());
     }
 
     @Test

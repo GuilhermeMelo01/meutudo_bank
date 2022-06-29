@@ -53,7 +53,7 @@ public class TransferenciaService {
         Conta contaEnviadorReembolso = contaService.findById(idEnviadorReembolso);
         Conta contaRecebedorReembolso = contaService.findById(reverterTransferenciaDTO.getIdRecebedorReembolso());
         Transferencia transferencia = findById(reverterTransferenciaDTO.getIdTransferencia());
-        Double valorTransferencia = transferencia.getValue();
+        Double valorTransferencia = transferencia.getValor();
         contaEnviadorReembolso.setSaldo(contaEnviadorReembolso.getSaldo() - valorTransferencia);
         contaRecebedorReembolso.setSaldo(contaRecebedorReembolso.getSaldo() + valorTransferencia);
         HelpTransferencia.transferenciaCancelada(transferencia, EstadoTransferencia.CANCELADA);

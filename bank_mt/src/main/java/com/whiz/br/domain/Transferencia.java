@@ -18,11 +18,11 @@ public class Transferencia implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double value;
+    private Double valor;
     private Integer estado;
 
     @JsonFormat(pattern = "dd-MM-yyyy")
-    private LocalDate date;
+    private LocalDate data;
 
     @JsonIgnore
     @ManyToOne
@@ -36,11 +36,11 @@ public class Transferencia implements Serializable {
     public Transferencia() {
     }
 
-    public Transferencia(Long id, Double value, EstadoTransferencia estado, LocalDate date, Conta conta) {
+    public Transferencia(Long id, Double valor, EstadoTransferencia estado, LocalDate data, Conta conta) {
         this.id = id;
-        this.value = value;
+        this.valor = valor;
         this.estado = (estado == null) ? null : estado.getCod();
-        this.date = date;
+        this.data = data;
         this.conta = conta;
     }
 
@@ -57,12 +57,12 @@ public class Transferencia implements Serializable {
         this.id = id;
     }
 
-    public Double getValue() {
-        return value;
+    public Double getValor() {
+        return valor;
     }
 
-    public void setValue(Double value) {
-        this.value = value;
+    public void setValor(Double valor) {
+        this.valor = valor;
     }
 
     public EstadoTransferencia getEstado() {
@@ -73,12 +73,12 @@ public class Transferencia implements Serializable {
         this.estado = estado.getCod();
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getData() {
+        return data;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setData(LocalDate data) {
+        this.data = data;
     }
 
     public Conta getConta() {

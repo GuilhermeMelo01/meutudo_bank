@@ -7,21 +7,19 @@ import com.whiz.br.enums.EstadoTransferencia;
 import com.whiz.br.repository.ContaRepository;
 import com.whiz.br.repository.ParcelaRepository;
 import com.whiz.br.repository.TransferenciaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class DBService {
 
-    @Autowired
-    private ContaRepository contaRepository;
-    @Autowired
-    private TransferenciaRepository transferenciaRepository;
-    @Autowired
-    private ParcelaRepository parcelaRepository;
+    private final ContaRepository contaRepository;
+    private final TransferenciaRepository transferenciaRepository;
+    private final ParcelaRepository parcelaRepository;
 
     public void instatiateTestDataBase() {
 

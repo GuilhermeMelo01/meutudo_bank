@@ -31,7 +31,7 @@ public class TransferenciaResource {
     }
 
     @RequestMapping(value = "/transferir", method = RequestMethod.POST)
-    public ResponseEntity<Void> tranferencia(@RequestBody NewTransferenciaDTO newTransferenciaDTO){
+    public ResponseEntity<Void> transferencia(@RequestBody NewTransferenciaDTO newTransferenciaDTO){
         transferenciaService.transferencia(newTransferenciaDTO);
         return ResponseEntity.noContent().build();
     }
@@ -44,7 +44,7 @@ public class TransferenciaResource {
     }
 
     @RequestMapping(value = "/parcelada", method = RequestMethod.POST)
-    public ResponseEntity<Void> tranferenciaParcelada(@RequestBody TransferenciaParceladaDTO transferenciaParceladaDTO){
+    public ResponseEntity<Void> transferenciaParcelada(@RequestBody TransferenciaParceladaDTO transferenciaParceladaDTO){
         transferenciaService.transferenciaParcelada(transferenciaParceladaDTO);
         return ResponseEntity.noContent().build();
     }

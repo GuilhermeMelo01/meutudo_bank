@@ -78,11 +78,11 @@ class TransferenciaResourceTest {
     @DisplayName("tranferencia insert Transferencia is different from null when successful")
     void tranferencia_InsertTransferenciaIsDifferentFromNull_WhenSuccessful() {
 
-        Assertions.assertThatCode(() -> transferenciaResource.tranferencia(
+        Assertions.assertThatCode(() -> transferenciaResource.transferencia(
                         TransferenciaDTOCreator.creatorNewTransferenciaDTOToBeSaved()))
                 .doesNotThrowAnyException();
 
-        ResponseEntity<Void> entity = transferenciaResource.tranferencia(
+        ResponseEntity<Void> entity = transferenciaResource.transferencia(
                 TransferenciaDTOCreator.creatorNewTransferenciaDTOToBeSaved());
 
         Assertions.assertThat(entity).isNotNull();
@@ -113,11 +113,11 @@ class TransferenciaResourceTest {
     @DisplayName("tranferencia Parcelada insert Transferencia is different from null when successful")
     void tranferenciaParcelada_InsertTransferenciaIsDifferentFromNull_WhenSuccessful() {
 
-        Assertions.assertThatCode(() -> transferenciaResource.tranferenciaParcelada(
+        Assertions.assertThatCode(() -> transferenciaResource.transferenciaParcelada(
                         TransferenciaParceladaDTOCreator.creatorVadidTransferenciaParcelada()))
                 .doesNotThrowAnyException();
 
-        ResponseEntity<Void> entity = transferenciaResource.tranferenciaParcelada(
+        ResponseEntity<Void> entity = transferenciaResource.transferenciaParcelada(
                 TransferenciaParceladaDTOCreator.creatorVadidTransferenciaParcelada());
 
         Assertions.assertThat(entity).isNotNull();

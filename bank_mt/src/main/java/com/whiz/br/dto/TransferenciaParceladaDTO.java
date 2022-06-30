@@ -1,22 +1,20 @@
 package com.whiz.br.dto;
 
-import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 public class TransferenciaParceladaDTO implements Serializable {
 
-    @NotEmpty(message = "that field cannot be empty")
     private Long idEnviadorTransferencia;
-    @NotEmpty(message = "that field cannot be empty")
+    private Long idRecebedorTransferencia;
     private Double valor;
-    @NotEmpty(message = "that field cannot be empty")
     private Integer numeroParcelas;
 
     public TransferenciaParceladaDTO(){
     }
 
-    public TransferenciaParceladaDTO(Long idEnviadorTransferencia, Double valor, Integer numeroParcelas) {
+    public TransferenciaParceladaDTO(Long idEnviadorTransferencia, Long idRecebedorTransferencia, Double valor, Integer numeroParcelas) {
         this.idEnviadorTransferencia = idEnviadorTransferencia;
+        this.idRecebedorTransferencia = idRecebedorTransferencia;
         this.valor = valor;
         this.numeroParcelas = numeroParcelas;
     }
@@ -27,6 +25,14 @@ public class TransferenciaParceladaDTO implements Serializable {
 
     public void setIdEnviadorTransferencia(Long idEnviadorTransferencia) {
         this.idEnviadorTransferencia = idEnviadorTransferencia;
+    }
+
+    public Long getIdRecebedorTransferencia() {
+        return idRecebedorTransferencia;
+    }
+
+    public void setIdRecebedorTransferencia(Long idRecebedorTransferencia) {
+        this.idRecebedorTransferencia = idRecebedorTransferencia;
     }
 
     public Double getValor() {

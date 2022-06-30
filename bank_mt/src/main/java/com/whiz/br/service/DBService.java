@@ -23,38 +23,39 @@ public class DBService {
 
     public void instatiateTestDataBase() {
 
-        Conta cont1 = new Conta(null, "8054", 1220.0);
-        Conta cont2 = new Conta(null, "8183", 4330.0);
-        Conta cont3 = new Conta(null, "5475", 10.000);
-        Conta cont4 = new Conta(null, "5235", 5540.10);
-        Conta cont5 = new Conta(null, "8877", 3432.30);
-        Conta cont6 = new Conta(null, "9324", 4435.55);
-        Conta cont7 = new Conta(null, "8433", 6070.40);
-        Conta cont8 = new Conta(null, "6543", 11020.10);
-        Conta cont9 = new Conta(null, "1325", 5000.0);
+        Conta cont1 = new Conta(1L, "8054", 1220.0);
+        Conta cont2 = new Conta(2L, "8183", 4330.0);
+        Conta cont3 = new Conta(3L, "5475", 10.000);
+        Conta cont4 = new Conta(4L, "5235", 5540.10);
+        Conta cont5 = new Conta(5L, "8877", 3432.30);
+        Conta cont6 = new Conta(6L, "9324", 4435.55);
+        Conta cont7 = new Conta(7L, "8433", 6070.40);
+        Conta cont8 = new Conta(8L, "6543", 11020.10);
+        Conta cont9 = new Conta(9L, "1325", 5000.0);
 
         Transferencia t1 = new Transferencia(null, 300.0, EstadoTransferencia.CONCLUIDA,
-                LocalDate.of(2021, 3, 11), cont1);
+                LocalDate.of(2021, 3, 11), cont1, cont2);
         Transferencia t2 = new Transferencia(null, 150.0, EstadoTransferencia.CONCLUIDA,
-                LocalDate.of(2022, 2, 28), cont2);
+                LocalDate.of(2022, 2, 28), cont2, cont3);
         Transferencia t3 = new Transferencia(null, 400.35, EstadoTransferencia.CONCLUIDA,
-                LocalDate.of(2019, 5, 23), cont3);
+                LocalDate.of(2019, 5, 23), cont3, cont9);
         Transferencia t4 = new Transferencia(null, 200.50, EstadoTransferencia.CONCLUIDA,
-                LocalDate.of(2016, 1, 12), cont5);
+                LocalDate.of(2016, 1, 12), cont5, cont7);
         Transferencia t5 = new Transferencia(null, 500.0, EstadoTransferencia.CONCLUIDA,
-                LocalDate.of(2021, 6, 15), cont8);
+                LocalDate.of(2021, 6, 15), cont8, cont1);
         Transferencia t6 = new Transferencia(null, 250.40, EstadoTransferencia.CONCLUIDA,
-                LocalDate.of(2020, 7, 16), cont9);
+                LocalDate.of(2020, 7, 16), cont9, cont3);
         Transferencia t7 = new Transferencia(null, 800.50, EstadoTransferencia.CONCLUIDA,
-                LocalDate.of(2017, 9, 1), cont8);
+                LocalDate.of(2017, 9, 1), cont8, cont4);
         Transferencia t8 = new Transferencia(null, 1000.00, EstadoTransferencia.PROGRAMADA,
-                LocalDate.of(2022, 6, 5), cont7);
+                LocalDate.of(2022, 6, 5), cont7, cont9);
         Transferencia t9 = new Transferencia(null, 220.20, EstadoTransferencia.CANCELADA,
-                LocalDate.of(2022, 1, 4), cont4);
+                LocalDate.of(2022, 1, 4), cont4, cont1);
         Transferencia t10 = new Transferencia(null, 22.00, EstadoTransferencia.CONCLUIDA,
-                LocalDate.of(2021, 5, 8), cont6);
+                LocalDate.of(2021, 5, 8), cont6, cont5);
         Transferencia t11 = new Transferencia(null, 100.00, EstadoTransferencia.CONCLUIDA,
-                LocalDate.of(2018, 2, 21), cont7);
+                LocalDate.of(2018, 2, 21), cont7, cont8);
+
 
         cont1.getTransferencias().addAll(List.of(t1));
         cont2.getTransferencias().addAll(List.of(t2));

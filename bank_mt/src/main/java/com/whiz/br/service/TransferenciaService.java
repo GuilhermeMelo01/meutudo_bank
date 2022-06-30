@@ -43,7 +43,7 @@ public class TransferenciaService {
         contaEnviador.setSaldo(contaEnviador.getSaldo() - valorTransferencia);
         contaRecebedor.setSaldo(contaRecebedor.getSaldo() + valorTransferencia);
         Transferencia transferencia = HelpTransferencia.newTransferencia(valorTransferencia,
-                EstadoTransferencia.CONCLUIDA, LocalDate.now(), contaEnviador);
+                EstadoTransferencia.CONCLUIDA, LocalDate.now(), contaEnviador, contaRecebedor);
         transferenciaRepository.saveAll(List.of(transferencia));
         contaRepository.saveAll(List.of(contaEnviador, contaRecebedor));
     }
@@ -63,13 +63,14 @@ public class TransferenciaService {
 
     public void transferenciaParcelada(TransferenciaParceladaDTO transferenciaParceladaDTO) {
         Conta contaEnviador = contaService.findById(transferenciaParceladaDTO.getIdEnviadorTransferencia());
+        Conta contaRecebedor = contaService.findById(transferenciaParceladaDTO.getIdRecebedorTransferencia());
         Double valorTransferencia = transferenciaParceladaDTO.getValor();
         Integer numeroParcelas = transferenciaParceladaDTO.getNumeroParcelas();
         LocalDate dataPagamentoPlus = LocalDate.now().plusMonths(1);
         HelpTransferencia.verificarSaldo(contaEnviador.getSaldo(), valorTransferencia);
         double valorParcelas = valorTransferencia / numeroParcelas;
         Transferencia newTransferencia = HelpTransferencia.newTransferenciaParcelada(
-                valorTransferencia, EstadoTransferencia.PROGRAMADA, LocalDate.now(), contaEnviador);
+                valorTransferencia, EstadoTransferencia.PROGRAMADA, LocalDate.now(), contaEnviador, contaRecebedor);
         List<Parcela> parcelas = HelpTransferencia.newParcelas(
                 numeroParcelas, valorParcelas, dataPagamentoPlus, newTransferencia);
         transferenciaRepository.saveAll(List.of(newTransferencia));

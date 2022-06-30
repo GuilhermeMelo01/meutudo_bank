@@ -43,13 +43,14 @@ public class HelpTransferencia {
         return listaDeParcelas;
     }
 
-    public static Transferencia newTransferencia(Double value, EstadoTransferencia estado, LocalDate localDate, Conta conta) {
-        return new Transferencia(null, value, estado, localDate, conta);
+    public static Transferencia newTransferencia(Double value, EstadoTransferencia estado, LocalDate localDate,
+                                                 Conta contaEnviador, Conta contaRecebedor) {
+        return new Transferencia(null, value, estado, localDate, contaEnviador, contaRecebedor);
     }
 
     public static Transferencia newTransferenciaParcelada(Double value, EstadoTransferencia estado,
-                                                   LocalDate localDate, Conta conta) {
-        return new Transferencia(null, value, estado, localDate, conta);
+                                                   LocalDate localDate, Conta contaEnviador, Conta contaRecebedor) {
+        return new Transferencia(null, value, estado, localDate, contaEnviador, contaRecebedor);
     }
 
     public static void transferenciaCancelada(Transferencia transferencia, EstadoTransferencia estado) {

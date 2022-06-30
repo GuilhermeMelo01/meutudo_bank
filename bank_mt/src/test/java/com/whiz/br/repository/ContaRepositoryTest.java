@@ -81,7 +81,7 @@ class ContaRepositoryTest {
     void save_ContaReturnTransferenciaList_WhenTransferenciaIsNotEmpty() {
         Conta contaSaved = this.contaRepository.save(createConta());
         Transferencia transferencia = new Transferencia(null, 300.0,
-                EstadoTransferencia.CONCLUIDA, LocalDate.now(), contaSaved);
+                EstadoTransferencia.CONCLUIDA, LocalDate.now(), contaSaved, new Conta());
         contaSaved.getTransferencias().add(transferencia);
 
         Assertions.assertThat(contaSaved.getTransferencias().get(0)).isEqualTo(transferencia);

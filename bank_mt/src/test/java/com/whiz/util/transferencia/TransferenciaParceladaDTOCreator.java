@@ -5,6 +5,6 @@ import com.whiz.br.dto.TransferenciaParceladaDTO;
 public class TransferenciaParceladaDTOCreator {
 
     public static TransferenciaParceladaDTO creatorVadidTransferenciaParcelada(){
-        return new TransferenciaParceladaDTO(1L, 300.0, 3);
+        return new TransferenciaParceladaDTO(1L, 2L, 300.0, 3);
     }
 }

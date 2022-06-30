@@ -17,7 +17,6 @@ public class Transferencia implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Double valor;
     private Integer estado;
 
@@ -29,6 +28,8 @@ public class Transferencia implements Serializable {
     @JoinColumn(name = "conta_id")
     private Conta conta;
 
+    private Long idContaRecebedora;
+
     @OneToMany(mappedBy = "transferencia")
     private List<Parcela> parcelas = new ArrayList<>();
 
@@ -36,12 +37,14 @@ public class Transferencia implements Serializable {
     public Transferencia() {
     }
 
-    public Transferencia(Long id, Double valor, EstadoTransferencia estado, LocalDate data, Conta conta) {
+    public Transferencia(Long id, Double valor, EstadoTransferencia estado, LocalDate data,
+                         Conta conta, Conta contaRecebedora) {
         this.id = id;
         this.valor = valor;
         this.estado = (estado == null) ? null : estado.getCod();
         this.data = data;
         this.conta = conta;
+        this.idContaRecebedora = contaRecebedora.getId();
     }
 
     public Transferencia(Long id, EstadoTransferencia estado) {
@@ -87,6 +90,14 @@ public class Transferencia implements Serializable {
 
     public void setConta(Conta conta) {
         this.conta = conta;
+    }
+
+    public Long getIdContaRecebedora() {
+        return idContaRecebedora;
+    }
+
+    public void setIdContaRecebedora(Long idContaRecebedora) {
+        this.idContaRecebedora = idContaRecebedora;
     }
 
     public List<Parcela> getParcelas() {

@@ -14,6 +14,7 @@ public class ContaService {
     @Autowired
     private ContaRepository contaRepository;
 
+    /** Procura uma Conta por id */
     public Conta findById(Long id) {
         return contaRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Value not found! value: " + id));
     }

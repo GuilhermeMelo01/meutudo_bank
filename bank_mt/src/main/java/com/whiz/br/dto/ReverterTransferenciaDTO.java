@@ -1,36 +1,21 @@
 package com.whiz.br.dto;
 
 import com.whiz.br.domain.Transferencia;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class ReverterTransferenciaDTO implements Serializable {
 
-    private Long idTransferencia;
     private Long idRecebedorReembolso;
+    private Long idTransferencia;
 
-    public ReverterTransferenciaDTO() {
-    }
-
-    public ReverterTransferenciaDTO(Transferencia transferencia) {
-        idTransferencia = transferencia.getId();
-        idRecebedorReembolso = transferencia.getConta().getId();
-    }
-
-    public Long getIdTransferencia() {
-        return idTransferencia;
-    }
-
-    public void setIdTransferencia(Long idTransferencia) {
-        this.idTransferencia = idTransferencia;
-    }
-
-    public Long getIdRecebedorReembolso() {
-        return idRecebedorReembolso;
-    }
-
-    public void setIdRecebedorReembolso(Long idRecebedorReembolso) {
-        this.idRecebedorReembolso = idRecebedorReembolso;
-    }
-
+    public ReverterTransferenciaDTO(Transferencia transferencia){}
 }

@@ -22,6 +22,8 @@ public enum EstadoTransferencia {
             return descricao;
         }
 
+        /* Method: O metodo toEnum() recebe como paramentro um Integer com o codigo do estado e retorna
+         o estado da transferencia EXEMPLO -> {CONCLUIDA, CANCELADA,..... } */
         public static EstadoTransferencia toEnum(Integer cod){
             if (cod == null) {
                 return null;

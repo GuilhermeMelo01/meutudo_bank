@@ -3,9 +3,6 @@ package com.whiz.br.service;
 import com.whiz.br.domain.Conta;
 import com.whiz.br.domain.Parcela;
 import com.whiz.br.domain.Transferencia;
-import com.whiz.br.dto.NewTransferenciaDTO;
-import com.whiz.br.dto.ReverterTransferenciaDTO;
-import com.whiz.br.dto.TransferenciaParceladaDTO;
 import com.whiz.br.repository.ContaRepository;
 import com.whiz.br.repository.ParcelaRepository;
 import com.whiz.br.repository.TransferenciaRepository;
@@ -33,22 +30,21 @@ public class TransferenciaService {
         return transferenciaRepository.findAll();
     }
 
-    public void transferencia(NewTransferenciaDTO newTransferenciaDTO) {
-        Conta contaEnviador = contaService.findById(newTransferenciaDTO.getIdEnviadorTransferencia());
-        Conta contaRecebedor = contaService.findById(newTransferenciaDTO.getIdRecebedorTransferencia());
-        Double valorTransferencia = newTransferenciaDTO.getValorTransferencia();
-        contaEnviador.saquar(valorTransferencia, contaRecebedor);
+    public void transferencia(Long idContaEnviador, Long idContaRecebedor, Double valorTransferencia) {
+        Conta contaEnviadorDB = contaService.findById(idContaEnviador);
+        Conta contaRecebedorDB = contaService.findById(idContaRecebedor);
+        contaEnviadorDB.saquar(valorTransferencia, contaRecebedorDB);
         Transferencia transferencia = Transferencia.builder().valor(valorTransferencia).estado(1)
-                .data(LocalDate.now()).conta(contaEnviador).idContaRecebedora(contaRecebedor.getId()).build();
+                .data(LocalDate.now()).conta(contaEnviadorDB).idContaRecebedora(contaRecebedorDB.getId()).build();
         transferenciaRepository.saveAll(List.of(transferencia));
-        contaRepository.saveAll(List.of(contaEnviador, contaRecebedor));
+        contaRepository.saveAll(List.of(contaEnviadorDB, contaRecebedorDB));
     }
 
-    public void reverterTransferencia(Long idEnviadorReembolso, ReverterTransferenciaDTO reverterTransferenciaDTO) {
+    public void reverterTransferencia(Long idEnviadorReembolso, Long idRecebedorReembolso, Long idTransferencia) {
         Conta contaEnviadorReembolso = contaService.findById(idEnviadorReembolso);
-        Conta contaRecebedorReembolso = contaService.findById(reverterTransferenciaDTO.getIdRecebedorReembolso());
-        contaEnviadorReembolso.verificarIdEquals(reverterTransferenciaDTO.getIdRecebedorReembolso());
-        Transferencia transferencia = findById(reverterTransferenciaDTO.getIdTransferencia());
+        Conta contaRecebedorReembolso = contaService.findById(idRecebedorReembolso);
+        contaEnviadorReembolso.verificarIdEquals(contaRecebedorReembolso.getId());
+        Transferencia transferencia = findById(idTransferencia);
         Double valorTransferencia = contaEnviadorReembolso.saquar(transferencia.getValor(), contaRecebedorReembolso);
         Transferencia transferenciaCancelada = Transferencia.builder().id(transferencia.getId()).valor(valorTransferencia).estado(3)
                 .data(transferencia.getData()).conta(contaRecebedorReembolso)
@@ -57,11 +53,10 @@ public class TransferenciaService {
         contaRepository.saveAll(List.of(contaEnviadorReembolso, contaRecebedorReembolso));
     }
 
-    public void transferenciaParcelada(TransferenciaParceladaDTO transferenciaParceladaDTO) {
-        Conta contaEnviador = contaService.findById(transferenciaParceladaDTO.getIdEnviadorTransferencia());
-        Conta contaRecebedor = contaService.findById(transferenciaParceladaDTO.getIdRecebedorTransferencia());
-        Double valorTransferencia = transferenciaParceladaDTO.getValor();
-        Integer numeroParcelas = transferenciaParceladaDTO.getNumeroParcelas();
+    public void transferenciaParcelada(Long idEnviadorTransferencia, Long idRecebedorTransferencia,
+                                       Double valorTransferencia, Integer numeroParcelas) {
+        Conta contaEnviador = contaService.findById(idEnviadorTransferencia);
+        Conta contaRecebedor = contaService.findById(idRecebedorTransferencia);
         LocalDate dataPagamentoPlus = LocalDate.now().plusMonths(1);
         contaEnviador.saquar(valorTransferencia, contaRecebedor);
         double valorParcelas = valorTransferencia / numeroParcelas;

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.whiz.br.enums.EstadoTransferencia;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serial;
@@ -15,8 +17,10 @@ import java.util.List;
 import java.util.Objects;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Builder
+@Getter
 public class Transferencia implements Serializable {
 
     @Serial
@@ -41,10 +45,6 @@ public class Transferencia implements Serializable {
     @OneToMany(mappedBy = "transferencia")
     private List<Parcela> parcelas = new ArrayList<>();
 
-
-    public Transferencia() {
-    }
-
     public Transferencia(Long id, Double valor, EstadoTransferencia estado, LocalDate data,
                          Conta conta, Conta contaRecebedora) {
         this.id = id;
@@ -55,16 +55,8 @@ public class Transferencia implements Serializable {
         this.idContaRecebedora = contaRecebedora.getId();
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Double getValor() {
-        return valor;
     }
 
     public void setValor(Double valor) {
@@ -79,32 +71,16 @@ public class Transferencia implements Serializable {
         this.estado = estado.getCod();
     }
 
-    public LocalDate getData() {
-        return data;
-    }
-
     public void setData(LocalDate data) {
         this.data = data;
-    }
-
-    public Conta getConta() {
-        return conta;
     }
 
     public void setConta(Conta conta) {
         this.conta = conta;
     }
 
-    public Long getIdContaRecebedora() {
-        return idContaRecebedora;
-    }
-
     public void setIdContaRecebedora(Long idContaRecebedora) {
         this.idContaRecebedora = idContaRecebedora;
-    }
-
-    public List<Parcela> getParcelas() {
-        return parcelas;
     }
 
     public void setParcelas(List<Parcela> parcelas) {

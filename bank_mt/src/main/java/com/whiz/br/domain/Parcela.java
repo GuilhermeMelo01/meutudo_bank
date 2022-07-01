@@ -2,14 +2,20 @@ package com.whiz.br.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Parcela implements Serializable {
 
     @Serial
@@ -29,47 +35,28 @@ public class Parcela implements Serializable {
     @JoinColumn(name = "transferencia_id")
     private Transferencia transferencia;
 
-    public Parcela() {
-    }
-
-    public Parcela(Long id, Double valorDaParcela, LocalDate dataPagamento) {
-        this.id = id;
-        this.valorDaParcela = valorDaParcela;
-        this.dataPagamento = dataPagamento;
-    }
-
-    public Parcela(Long id, Double valorDaParcela, LocalDate dataPagamento, Transferencia transferencia) {
-        this.id = id;
-        this.valorDaParcela = valorDaParcela;
-        this.dataPagamento = dataPagamento;
-        this.transferencia = transferencia;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Double getValorDaParcela() {
-        return valorDaParcela;
-    }
-
-    public LocalDate getDataPagamento() {
-        return dataPagamento;
     }
 
     public void setDataPagamento(LocalDate dataPagamento) {
         this.dataPagamento = dataPagamento;
     }
 
-    public Transferencia getTransferencia() {
-        return transferencia;
-    }
-
     public void setTransferencia(Transferencia transferencia) {
         this.transferencia = transferencia;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Parcela parcela = (Parcela) o;
+        return Objects.equals(id, parcela.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

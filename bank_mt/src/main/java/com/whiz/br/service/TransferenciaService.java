@@ -6,15 +6,14 @@ import com.whiz.br.domain.Transferencia;
 import com.whiz.br.dto.NewTransferenciaDTO;
 import com.whiz.br.dto.ReverterTransferenciaDTO;
 import com.whiz.br.dto.TransferenciaParceladaDTO;
-import com.whiz.br.enums.EstadoTransferencia;
 import com.whiz.br.repository.ContaRepository;
 import com.whiz.br.repository.ParcelaRepository;
 import com.whiz.br.repository.TransferenciaRepository;
-import com.whiz.br.service.utils.HelpTransferencia;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -38,26 +37,23 @@ public class TransferenciaService {
         Conta contaEnviador = contaService.findById(newTransferenciaDTO.getIdEnviadorTransferencia());
         Conta contaRecebedor = contaService.findById(newTransferenciaDTO.getIdRecebedorTransferencia());
         Double valorTransferencia = newTransferenciaDTO.getValorTransferencia();
-        Double saldoContaEnviador = contaEnviador.getSaldo();
-        HelpTransferencia.verificarSaldo(saldoContaEnviador, valorTransferencia);
-        contaEnviador.setSaldo(contaEnviador.getSaldo() - valorTransferencia);
-        contaRecebedor.setSaldo(contaRecebedor.getSaldo() + valorTransferencia);
-        Transferencia transferencia = HelpTransferencia.newTransferencia(valorTransferencia,
-                EstadoTransferencia.CONCLUIDA, LocalDate.now(), contaEnviador, contaRecebedor);
+        contaEnviador.saquar(valorTransferencia, contaRecebedor);
+        Transferencia transferencia = Transferencia.builder().valor(valorTransferencia).estado(1)
+                .data(LocalDate.now()).conta(contaEnviador).idContaRecebedora(contaRecebedor.getId()).build();
         transferenciaRepository.saveAll(List.of(transferencia));
         contaRepository.saveAll(List.of(contaEnviador, contaRecebedor));
     }
 
     public void reverterTransferencia(Long idEnviadorReembolso, ReverterTransferenciaDTO reverterTransferenciaDTO) {
-        HelpTransferencia.verificarIdEquals(idEnviadorReembolso, reverterTransferenciaDTO.getIdRecebedorReembolso());
         Conta contaEnviadorReembolso = contaService.findById(idEnviadorReembolso);
         Conta contaRecebedorReembolso = contaService.findById(reverterTransferenciaDTO.getIdRecebedorReembolso());
+        contaEnviadorReembolso.verificarIdEquals(reverterTransferenciaDTO.getIdRecebedorReembolso());
         Transferencia transferencia = findById(reverterTransferenciaDTO.getIdTransferencia());
-        Double valorTransferencia = transferencia.getValor();
-        contaEnviadorReembolso.setSaldo(contaEnviadorReembolso.getSaldo() - valorTransferencia);
-        contaRecebedorReembolso.setSaldo(contaRecebedorReembolso.getSaldo() + valorTransferencia);
-        HelpTransferencia.transferenciaCancelada(transferencia, EstadoTransferencia.CANCELADA);
-        transferenciaRepository.saveAll(List.of(transferencia));
+        Double valorTransferencia = contaEnviadorReembolso.saquar(transferencia.getValor(), contaRecebedorReembolso);
+        Transferencia transferenciaCancelada = Transferencia.builder().id(transferencia.getId()).valor(valorTransferencia).estado(3)
+                .data(transferencia.getData()).conta(contaRecebedorReembolso)
+                .idContaRecebedora(contaEnviadorReembolso.getId()).build();
+        transferenciaRepository.saveAll(List.of(transferenciaCancelada));
         contaRepository.saveAll(List.of(contaEnviadorReembolso, contaRecebedorReembolso));
     }
 
@@ -67,13 +63,16 @@ public class TransferenciaService {
         Double valorTransferencia = transferenciaParceladaDTO.getValor();
         Integer numeroParcelas = transferenciaParceladaDTO.getNumeroParcelas();
         LocalDate dataPagamentoPlus = LocalDate.now().plusMonths(1);
-        HelpTransferencia.verificarSaldo(contaEnviador.getSaldo(), valorTransferencia);
+        contaEnviador.saquar(valorTransferencia, contaRecebedor);
         double valorParcelas = valorTransferencia / numeroParcelas;
-        Transferencia newTransferencia = HelpTransferencia.newTransferenciaParcelada(
-                valorTransferencia, EstadoTransferencia.PROGRAMADA, LocalDate.now(), contaEnviador, contaRecebedor);
-        List<Parcela> parcelas = HelpTransferencia.newParcelas(
-                numeroParcelas, valorParcelas, dataPagamentoPlus, newTransferencia);
-        transferenciaRepository.saveAll(List.of(newTransferencia));
-        parcelaRepository.saveAll(parcelas);
+        Transferencia novaTransferencia = Transferencia.builder().valor(valorTransferencia).estado(2).data(LocalDate.now())
+                .conta(contaEnviador).idContaRecebedora(contaRecebedor.getId()).build();
+        List<Parcela> listaDeParcelas = new ArrayList<>();
+        for (int i = 0; i < numeroParcelas; i++) {
+            listaDeParcelas.add(new Parcela(null, valorParcelas, dataPagamentoPlus, novaTransferencia));
+            dataPagamentoPlus = dataPagamentoPlus.plusMonths(1);
+        }
+        transferenciaRepository.saveAll(List.of(novaTransferencia));
+        parcelaRepository.saveAll(listaDeParcelas);
     }
 }

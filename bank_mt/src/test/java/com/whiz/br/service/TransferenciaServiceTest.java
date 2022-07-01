@@ -91,13 +91,12 @@ class TransferenciaServiceTest {
     @DisplayName("reverter Transferencia check if ContaRecebedor saldo is greater is different from null when successful")
     void reverterTransferencia_CheckIfContaOnTransferenciaIsDifferentFromNull_WhenSuccessful() {
         Conta contaRecebedor = ContaCreator.creatorValidContaWithTransferencia();
-        Transferencia transferencia = contaRecebedor.getTransferencias().get(0);
-        contaRecebedor.setSaldo(contaRecebedor.getSaldo() + transferencia.getValor());
+        double contaSaldoPlus = contaRecebedor.getSaldo() + 300;
 
         Assertions.assertThat(contaRecebedor).isNotNull();
         Assertions.assertThat(contaRecebedor.getId()).isNotEqualTo(ContaCreator.creatorUpdateValidConta().getId());
         Assertions.assertThat(contaRecebedor.getSaldo()).isGreaterThan(0);
-        Assertions.assertThat(contaRecebedor.getSaldo()).isGreaterThan(
+        Assertions.assertThat(contaSaldoPlus).isGreaterThan(
                 ContaCreator.creatorValidContaWithTransferencia().getSaldo());
     }
 
